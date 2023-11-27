@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link href="/css/style2.css" type="text/css" rel="stylesheet">
+    <style>
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+    </style>
+    <title>Employee</title>
+</head>
+<body>
+
+<header>
+
+    <a href="" class="logo">
+        <i class="fa-solid fa-users"></i>
+        <span>Employee</span>
+    </a>
+
+    <div class="wellcome">
+
+        <div class="hello">
+            <p th:if="${accountSession != null}">
+                Wellcome <span th:text="${accountSession.account}"></span>
+            </p>
+        </div>
+
+        <a th:href="@{/logout}" class="logout">
+            <i class="fa-solid fa-right-from-bracket"></i
+            >&nbsp;&nbsp;
+            <span>Logout</span>
+        </a>
+
+    </div>
+
+</header>
+
+<main>
+    <div class="navBar">
+
+        <a class="dashboard" th:href="@{/home}">
+                    <span class="icon_dashboard">
+                        <i class="fa-solid fa-gauge"></i>
+                    </span>
+            <span>Dashboard</span>
+        </a>
+        <div class="manager">
+            <div class="manager_emp">
+                        <span class="icon_manager">
+                            <i class="fa-solid fa-people-roof"></i>
+                        </span>
+                <span>Employee Manager</span>
+            </div>
+
+            <div class="icon_show">
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <div class="choice">
+            <a class="view_content" th:href="@{/home/employees}">
+                <span class="icon_table">
+                    <i class="fa-solid fa-table"></i>
+                </span>&nbsp;&nbsp;
+                <span>Employee List</span>
+            </a>
+
+            <a class="form_content" th:href="@{/home/addEmployee}">
+                        <span class="icon_table">
+                            <i class="fa-solid fa-user-plus"></i></span>
+                &nbsp;&nbsp;
+                <span>Add Employee</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="title">
+            <p>Add Employee</p>
+            <br>
+
+            <p th:if="${msg != null and msg.status == 'fail'}" style="color: red; font-size: 20px" th:text="${msg.message}"></p>
+            <p th:if="${msg != null and msg.status == 'success'}" style="color: green; font-size: 20px" th:text="${msg.message}"></p>
+
+
+            <span ></span>
+        </div>
+        <div class="container_form">
+            <div class="title_form">
+                <span>Information employee</span>
+            </div>
+
+            <form th:action="@{/home/addEmployee}" th:object="${addEmployee}" method="post" class="form_info">
+                <fieldset>
+                    <label for="firstName">First Name</label><br />
+                    <input type="text" class="input" id="firstName" th:field="*{firstName}" placeholder="Enter the first name" /><br />
+                    <small class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></small><br />
+
+                    <label for="lastName">Last Name</label><br />
+                    <input type="text" class="input" id="lastName" th:field="*{lastName}" placeholder="Enter the last name" /><br />
+                    <small class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></small><br />
+
+                    <label for="phone">Phone Number</label><br />
+                    <input type="text" class="input" id="phone" th:field="*{phone}" placeholder="Enter your phone number" /><br />
+                    <small class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></small><br />
+
+                    <label for="dob">Date of birth</label><br />
+                    <input type="date" class="input" id="dob" th:field="*{dob}" /><br />
+                    <small class="error" th:if="${#fields.hasErrors('dob')}" th:errors="*{dob}"></small><br />
+
+                    <label>Gender</label><br />
+                    <div class="gender_box">
+                        <label class="gender" for="male">Male</label>
+                        <input type="radio" id="male" th:field="*{gender}" value="MALE" />
+                        <label class="gender" for="female">Female</label>
+                        <input type="radio" id="female" th:field="*{gender}" value="FEMALE" />
+                    </div>
+                    <small class="error" th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}"></small><br />
+
+                    <label for="account">Account</label><br />
+                    <input type="text" class="input" id="account" th:field="*{account}" placeholder="Enter the account" /><br />
+                    <small class="error" th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></small><br />
+
+                    <label for="email">Email</label><br />
+                    <input type="text" class="input" id="email" th:field="*{email}" placeholder="your_email@example.com" /><br />
+                    <small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small><br />
+
+                    <label for="password">Password</label><br />
+                    <input type="password" class="input" id="password" th:field="*{password}" placeholder="Password" /><br />
+                    <small class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small><br />
+
+                    <label for="role">Role</label><br />
+                    <select class="input" id="role" th:field="*{role}">
+                        <option value="ROLE_ADMIN" selected>Role Admin</option>
+                        <option value="ROLE_USER" >Role User</option>
+                    </select><br />
+                    <small class="error" th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></small><br />
+
+                    <label for="address">Address</label><br />
+                    <textarea class="input" id="address" th:field="*{address}" rows="2"></textarea><br />
+                    <small class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></small><br />
+
+                    <label>Status</label><br />
+                    <div class="gender_box">
+                        <label class="gender" for="status">Active</label>
+                        <input type="checkbox" class="gender" id="status" th:field="*{status}" /><br />
+                        <small class="error" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></small><br />
+                    </div>
+
+                    <label for="departmentName">Department</label><br />
+                    <select class="input" id="departmentName" th:field="*{departmentName}">
+                        <option value="Fsoft Academy">Fsoft Academy</option>
+                        <option value="Fsoft Marketing">Fsoft Marketing</option>
+                        <option value="Fsoft IT">Fsoft IT</option>
+                    </select><br />
+                    <small class="error" th:if="${#fields.hasErrors('departmentName')}" th:errors="*{departmentName}"></small><br />
+
+                    <label for="remark">Remark</label><br />
+                    <textarea class="input" id="remark" th:field="*{remark}" rows="5"></textarea><br />
+                    <small class="error" th:if="${#fields.hasErrors('remark')}" th:errors="*{remark}"></small><br />
+
+                </fieldset>
+                <input type="button" class="btn" value="BACK" onclick="back()"/>
+                <input type="submit" class="btn" value="ADD" />
+                <input type="reset" class="btn" value="RESET" />
+            </form>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+<script src="/js/script1.js"></script>
+<script>
+    function back() {
+        history.back();
+    }
+</script>
+
+</body>
+</html>

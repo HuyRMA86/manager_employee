@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+            href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap"
+            rel="stylesheet"
+    />
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+            integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <link href="/css/style2.css" type="text/css" rel="stylesheet">
+    <title>Employee</title>
+</head>
+<body>
+
+<header>
+
+    <a href="" class="logo">
+        <i class="fa-solid fa-users"></i>
+        <span>Employee</span>
+    </a>
+
+    <div class="wellcome">
+
+        <div class="hello">
+            <p th:if="${accountSession != null}">
+                Wellcome <span th:text="${accountSession.account}"></span>
+            </p>
+        </div>
+
+        <a th:href="@{/logout}" class="logout">
+            <i class="fa-solid fa-right-from-bracket"></i
+            >&nbsp;&nbsp;
+            <span>Logout</span>
+        </a>
+
+    </div>
+
+</header>
+
+<main>
+    <div class="navBar">
+
+        <a class="dashboard" th:href="@{/home}">
+                    <span class="icon_dashboard">
+                        <i class="fa-solid fa-gauge"></i>
+                    </span>
+            <span>Dashboard</span>
+        </a>
+        <div class="manager">
+            <div class="manager_emp">
+                        <span class="icon_manager">
+                            <i class="fa-solid fa-people-roof"></i>
+                        </span>
+                <span>Employee Manager</span>
+            </div>
+
+            <div class="icon_show">
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <div class="choice">
+            <a class="view_content" th:href="@{/home/employees}">
+                <span class="icon_table">
+                    <i class="fa-solid fa-table"></i>
+                </span>&nbsp;&nbsp;
+                <span>Employee List</span>
+            </a>
+
+            <a class="form_content" th:href="@{/home/addEmployee}">
+                        <span class="icon_table">
+                            <i class="fa-solid fa-user-plus"></i></span>
+                &nbsp;&nbsp;
+                <span>Add Employee</span>
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="title">
+            <p>Employee List</p>
+        </div>
+
+        <div class="search_user" >
+            <div class="search">
+                        <span class="icon_search">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </span>
+                <input
+                        id="search_value"
+                        type="search"
+                        name="search"
+                        placeholder="User search"
+                />
+            </div>
+
+            <div class="filter">
+                        <span class="icon_search">
+                            <i class="fa-solid fa-filter"></i>&nbsp;
+                            <span>Filter by</span>
+                        </span>
+                <select id="filter_value" name="searchField">
+                    <option selected value="">-- Select --</option>
+                    <option  value="address">Address</option>
+                    <option  value="phoneNumber">Phone number</option>
+                    <option  value="department">Department</option>
+                    <option  value="name">Name</option>
+
+                </select>
+            </div>
+
+
+            <button class="submit_search">Search</button>
+
+        </div>
+
+        <table id="content_table" style="height: 350px">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date of birth</th>
+                <th>Address</th>
+                <th>Phone number</th>
+                <th>Department</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody id="view_list_emp">
+
+                <tr th:each="employee : ${employees}">
+                    <td th:text="${employee.getId()}"></td>
+                    <td th:text="${employee.getFirstName() +' '+ employee.getLastName()}"></td>
+                    <td th:text="${employee.getDob()}"></td>
+                    <td th:text="${employee.getAddress()}"></td>
+                    <td th:text="${employee.getPhone()}"></td>
+                    <td th:text="${employee.getDepartmentName()}"></td>
+                    <td>
+                        <a th:attr="href=@{/home/detailEmployee/{id}(id=${employee.getId()})}">
+                            <i class="fa-solid fa-eye"></i>
+                            <span>View</span>
+                        </a>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+        <!--    <p style="font-size: 20px; color:  #0428e0; font-weight: 500;"><span class="totalResult">5</span> result</p>-->
+
+        <div class="page">
+            <span class="previous">Previous</span>
+            <span class="index_page">1</span>
+            <span class="next_page">Next</span>
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+
+<script src="/js/script1.js"></script>
+
+</body>
+</html>
